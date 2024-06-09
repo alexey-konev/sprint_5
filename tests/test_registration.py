@@ -1,5 +1,5 @@
 import pytest
-
+import data
 from locators import TestLocators
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
@@ -26,11 +26,11 @@ class TestRegistration:
         # если залогинились, то на главной странце должна быть кнопка Оформить заказ
         assert WebDriverWait(driver, 3).until(expected_conditions.presence_of_element_located(TestLocators.ORDER_BUTTON_MAIN_PAGE))
 
-    def test_invalid_password(self, driver, valid_name, valid_login, invalid_password):
+    def test_invalid_password(self, driver, invalid_password):
         driver.get('https://stellarburgers.nomoreparties.site/register')  # стр регистрации
 
-        driver.find_element(*TestLocators.NAME_FIELD).send_keys(valid_name)  # заполняем все поля
-        driver.find_element(*TestLocators.EMAIL_FIELD).send_keys(valid_login)
+        driver.find_element(*TestLocators.NAME_FIELD).send_keys(data.valid_name)  # заполняем все поля
+        driver.find_element(*TestLocators.EMAIL_FIELD).send_keys(data.valid_login)
         driver.find_element(*TestLocators.PASSWORD_FIELD).send_keys(invalid_password)  # слишком короткий пароль
 
         driver.find_element(*TestLocators.REGISTRATION_BUTTON).click()  # нажимаем по кнопке регистрации
